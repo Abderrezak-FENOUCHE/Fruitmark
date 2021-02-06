@@ -44,7 +44,9 @@ app.use(function(req, res, next) {
 //Définition du routeur
 const router = express.Router();
 app.use("/user", router);
+app.use("/magasins", router)
 require(__dirname + "/controllers/userController")(router);
+require(__dirname + "/controllers/magasinController")(router);
 
 //On définit la route info
 app.get('/info',function(req,res){
