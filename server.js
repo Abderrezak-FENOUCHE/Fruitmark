@@ -2,6 +2,7 @@
 const express = require("express"); 
 const mongoose = require("mongoose"); 
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
 
 //Connexion à la base de donnée
 mongoose
@@ -16,6 +17,7 @@ mongoose
 
 //On définit notre objet express nommé app
 const app = express();
+app.use(morgan('dev'));
 
 //Body Parser
 const urlencodedParser = bodyParser.urlencoded({
