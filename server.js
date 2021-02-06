@@ -27,13 +27,24 @@ app.use(urlencodedParser);
 app.use(bodyParser.json());
 
 //Définition des CORS
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
+app.use(function(req, res, next) {
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,content-type"
+  );
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
 });
+
+//Définition du routeur
+const router = express.Router();
+app.use("/user", router);
+require(__dirname + "/controllers/userController")(router);
 
 //On définit la route info
 app.get('/info',function(req,res){
