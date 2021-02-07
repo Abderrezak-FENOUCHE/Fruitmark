@@ -13,16 +13,19 @@ export class Login extends React.Component {
     
     };
   }
-  send = async () => {
+  send = async (event) => {
+    event.preventDefault();
     const { email, password } = this.state;
     if (!email || email.length === 0) {
-      return console.log("fuck emaikl");
+      return alert("veuillez saisir un mail valide")
     }
     if (!password || password.length === 0) {
-      return console.log("fuck password");
+      return alert("veuillez saisir un mot de passe valide")
     }
     try {
       const { data } = await API.login(email, password);
+      console.log(data);
+
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", email);
       window.location = "/dashboard";
@@ -35,6 +38,7 @@ export class Login extends React.Component {
   };
   handleChangeP = (event) => {
     this.setState({password: event.target.value});
+
   };
   
   render() {
@@ -47,12 +51,12 @@ export class Login extends React.Component {
                 <p className="h5 text-center mb-4">Authentification</p>
                 <div className="grey-text">
                   <MDBInput label="Tapez votre email" icon="envelope" group type="email" validate error="wrong" 
-                    value={this.state.email} onChange={this.handleChangeE.bind(this)} success="right" />
+                    onChange = {this.handleChangeE} success="right" />
                   <MDBInput label="Tapez votre mot de passe" icon="lock" group type="password" 
-                    value={this.state.password} onChange={this.handleChangeP.bind(this)} validate />
+                    onChange = {this.handleChangeP} validate />
                 </div>
                 <div className="text-center">
-                  <MDBBtn type="submit">Valider</MDBBtn>
+                  <MDBBtn  type="submit">Valider</MDBBtn>
                 </div>
               </form>
             </MDBCol>
