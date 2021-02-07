@@ -1,31 +1,127 @@
-import React from "react";
-import { Button, Nav, NavDropdown, Form, Navbar, FormControl } from "react-bootstrap";
-
+import React, { Component } from "react";
+import {
+  MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
+  MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon, MDBContainer, MDBRow, MDBCol, MDBTable, MDBTableHead, MDBTableBody
+} from "mdbreact";
 import API from "../../utils/API";
+import './Dashboard.css'
 
 export class Dashboard extends React.Component {
-  state = {
-    username : localStorage.getItem("username")
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: null,
+      isOpen: false
+    };
   }
-   
+  toggleCollapse = () => {
+    this.setState({ isOpen: !this.state.isOpen });
+  }
+
+  componentDidMount() {
+    this.getAllMagasins();
+  }
+
+  getAllMagasins = async () => {
+    try {
+      const response = await API.getAllmagasins();
+      this.setState({ data: response.data })
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
   disconnect = () => {
     API.logout();
     window.location = "/";
   };
+
+
   render() {
     return (
       <div className="">
-        <Navbar collapseOnSelect expand="lg" className="topNavBar" variant="dark">
-          <Navbar.Brand href="#home">FruitMark</Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="mr-auto">
-              <NavDropdown title={this.state.username } id="collasible-nav-dropdown">
-                <NavDropdown.Item onClick={this.disconnect} >Se déconnecter</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
+
+
+        < MDBNavbar color="default-color" dark expand="md">
+          <MDBNavbarBrand>
+            <strong className="white-text">FruitMark</strong>
+          </MDBNavbarBrand>
+          <MDBNavbarToggler onClick={this.toggleCollapse} />
+          <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
+            <MDBNavbarNav left>
+              <MDBNavItem active>
+                <MDBNavLink to="#!">Home</MDBNavLink>
+              </MDBNavItem>
+              <MDBNavItem>
+                <MDBDropdown>
+                </MDBDropdown>
+              </MDBNavItem>
+            </MDBNavbarNav>
+            <MDBNavbarNav right>
+              <MDBNavItem>
+                <MDBDropdown>
+                  <MDBDropdownToggle nav caret>
+                    <MDBIcon icon="user" className="mr-1" />
+                    {localStorage.getItem("username")}
+                  </MDBDropdownToggle>
+                  <MDBDropdownMenu className="dropdown-default">
+                    <MDBDropdownItem onClick={this.disconnect}>Deconnection</MDBDropdownItem>
+                  </MDBDropdownMenu>
+                </MDBDropdown>
+              </MDBNavItem>
+            </MDBNavbarNav>
+          </MDBCollapse>
+        </MDBNavbar>
+        <MDBContainer>
+          <MDBRow>
+            <MDBCol md="1"></MDBCol>
+            <MDBCol md="10" className="text-center mt-2">
+              <h2>Etat des stocks</h2>
+              {!this.state.data &&
+              <>
+                <div className="spinner-border text-success" role="status">
+                <span className="sr-only">Loading...</span>
+              </div>
+              </>
+              }
+              <MDBTable>
+                    <MDBTableHead>
+                      <tr>
+                        <th>Localisation</th>
+                        <th>Stock</th>
+                      </tr>
+                    </MDBTableHead>
+                    <MDBTableBody>
+
+              {this.state.data &&
+                this.state.data.map((item) =>
+                  
+                      <tr>
+                        <td>{item.localisation}</td>
+                        <td>
+                          Orange :  {item.stock.Orange}<br></br>
+                          Banane :  {item.stock.Banane}<br></br>
+                          Pomme : {item.stock.Pomme}<br></br>
+                          Fraise :  {item.stock.Fraise}<br></br>
+                          Cerise :  {item.stock.Cerise}
+                        </td>
+                      </tr>
+                      )
+                    }
+
+                    </MDBTableBody>
+                  </MDBTable>
+                
+            </MDBCol>
+            <MDBCol md="1"></MDBCol>
+          </MDBRow>
+        </MDBContainer>
+
+
+
+
       </div>
     );
   }
