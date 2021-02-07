@@ -86,7 +86,7 @@ export class Dashboard extends React.Component {
               </div>
               </>
               }
-              <MDBTable>
+              <MDBTable bordered>
                     <MDBTableHead>
                       <tr>
                         <th>Localisation</th>
@@ -99,12 +99,12 @@ export class Dashboard extends React.Component {
                 this.state.data.map((item) =>
                   
                       <tr>
-                        <td>{item.localisation}</td>
-                        <td>
-                          Orange :  {item.stock.Orange}<br></br>
-                          Banane :  {item.stock.Banane}<br></br>
-                          Pomme : {item.stock.Pomme}<br></br>
-                          Fraise :  {item.stock.Fraise}<br></br>
+                        <td className="m-5 p-5">{item.localisation}</td>
+                        <td className="p-1">
+                          Orange :  {item.stock.Orange}<hr className="m-1"></hr>
+                          Banane :  {item.stock.Banane}<hr className="m-1"></hr>
+                          Pomme : {item.stock.Pomme}<hr className="m-1"></hr>
+                          Fraise :  {item.stock.Fraise}<hr className="m-1"></hr>
                           Cerise :  {item.stock.Cerise}
                         </td>
                       </tr>
