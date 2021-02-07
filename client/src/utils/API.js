@@ -26,5 +26,9 @@ export default {
   },
   logout: function() {
     localStorage.clear();
+  },
+
+  getAllmagasins : ()=>{
+    return axios.get(`${apiUrl}/magasins`,{headers: headers});
   }
 };
