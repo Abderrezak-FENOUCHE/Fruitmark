@@ -6,7 +6,7 @@ const morgan = require('morgan');
 
 //Connexion à la base de donnée
 mongoose
-  .connect("mongodb://localhost/db")
+  .connect("mongodb+srv://root:root@fruitmark.qddcz.mongodb.net/fruitmark?retryWrites=true&w=majority")
   .then(() => {
     console.log("Connected to mongoDB");
   })
@@ -49,7 +49,7 @@ require(__dirname + "/controllers/userController")(router);
 require(__dirname + "/controllers/magasinController")(router);
 
 //On définit la route info
-app.get('/info',function(req,res){
+app.get('/',function(req,res){
     res.json("Fruitmark 1.0.0")
 })
 
