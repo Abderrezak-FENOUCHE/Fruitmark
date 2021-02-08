@@ -46,7 +46,6 @@ app.use(function(req, res, next) {
 const router = express.Router();
 app.use("/user", router);
 app.use("/magasins", router);
-app.use(express.static(path.join(__dirname, "client", "build")));
 require(__dirname + "/controllers/userController")(router);
 require(__dirname + "/controllers/magasinController")(router);
 
@@ -55,9 +54,10 @@ app.get('/info',function(req,res){
     res.json("Fruitmark 1.0.0")
 })
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname,"client", "build", "index.html"));
-});
+app.use(express.static(path.join(__dirname, 'client/build')))
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/build'))
+})
 
 //Définition et mise en place du port d'écoute
 const port = process.env.PORT || 5000;
