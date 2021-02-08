@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose"); 
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const path = require("path")
 
 //Connexion à la base de donnée
 mongoose
@@ -44,15 +45,21 @@ app.use(function(req, res, next) {
 //Définition du routeur
 const router = express.Router();
 app.use("/user", router);
-app.use("/magasins", router)
+app.use("/magasins", router);
+app.use(express.static(path.join(__dirname, "client", "build")));
 require(__dirname + "/controllers/userController")(router);
 require(__dirname + "/controllers/magasinController")(router);
 
 //On définit la route info
-app.get('/',function(req,res){
+app.get('/info',function(req,res){
     res.json("Fruitmark 1.0.0")
 })
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname,"client", "build", "index.html"));
+});
 
 //Définition et mise en place du port d'écoute
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Ecoute sur le port: ${port}`));
+
