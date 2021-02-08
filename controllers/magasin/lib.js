@@ -36,7 +36,6 @@ async function transferFruit(req, res) {
       });
     }
     else {
-      console.log("ELSE")
       let findFruitDep;
       let findFruitArr;
       
@@ -46,14 +45,14 @@ async function transferFruit(req, res) {
           findFruitDep=element
         }
       });
-      console.log(findFruitDep)
+      //console.log(findFruitDep)
       stockArrArray = Object.entries(findMagasinArrrivee.stock);
       stockArrArray.forEach(element => {
         if(element[0]=== fruit){
           findFruitArr=element
         }
       });
-      console.log(findFruitArr)
+      //console.log(findFruitArr)
 
       if ((findFruitDep[1] < quantite)) {
         return res.status(400).json({
@@ -64,8 +63,8 @@ async function transferFruit(req, res) {
       const updateDepart = JSON.parse(`{"stock.${fruit}" : ${findFruitDep[1] - quantite}}`);
       const filterArrivee = { "localisation": magasinArrrivee }
       const updateArrivee = JSON.parse(`{"stock.${fruit}" : ${findFruitArr[1] + quantite}}`);
-      console.log(updateDepart)
-      console.log(updateArrivee)
+      //console.log(updateDepart)
+      //console.log(updateArrivee)
 
       // Mise à jour de la base de donnée
       await Magasin.updateOne(filterDepart, updateDepart);
