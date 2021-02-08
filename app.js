@@ -54,5 +54,5 @@ app.get('/info',function(req,res){
 })
 
 //Définition et mise en place du port d'écoute
-const port = 5000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Ecoute sur le port: ${port}`));
