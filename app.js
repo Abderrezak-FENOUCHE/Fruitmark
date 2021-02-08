@@ -54,10 +54,6 @@ app.get('/info',function(req,res){
     res.json("Fruitmark 1.0.0")
 })
 
-app.use(express.static(path.join(__dirname, 'client/build')))
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/build'))
-})
 
 //Définition et mise en place du port d'écoute
 const port = process.env.PORT || 5000;
