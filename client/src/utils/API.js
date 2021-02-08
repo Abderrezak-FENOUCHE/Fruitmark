@@ -30,5 +30,19 @@ export default {
 
   getAllmagasins : ()=>{
     return axios.get(`${apiUrl}/magasins`,{headers: headers});
-  }
+  },
+  transferFruit: function(magasinDepart, magasinArrrivee, fruit, quantite) {  
+    return axios.post(
+      `${apiUrl}/magasins/transferFruit`,
+      {
+        magasinDepart,
+        magasinArrrivee,
+        fruit,
+        quantite
+      },
+      {
+        headers: headers
+      }
+    );
+  },
 };
