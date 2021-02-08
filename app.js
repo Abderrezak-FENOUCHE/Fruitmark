@@ -50,7 +50,7 @@ require(__dirname + "/controllers/userController")(router);
 require(__dirname + "/controllers/magasinController")(router);
 
 //On définit la route info
-app.get('/info',function(req,res){
+app.get('/',function(req,res){
     res.json("Fruitmark 1.0.0")
 })
 
